@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from "svelte/store.js";
 
 const API_ENDPOINT = "http://localhost:8504/generate-ticket";
 

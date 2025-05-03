@@ -1,5 +1,3 @@
-import { writable } from "svelte/store";
-
 const API_ENDPOINT = "http://localhost:8504/query-stream";
 
 export const chatStates = {
@@ -8,7 +6,14 @@ export const chatStates = {
 };
 
 function createChatStore() {
-    const { subscribe, update } = writable({ state: chatStates.IDLE, data: [] });
+    let state = { state: chatStates.IDLE, data: [] };
+    const subscribe = (fn) => {
+        fn(state);
+        return () => {};
+    };
+    const update = (fn) => {
+        state = fn(state);
+    };
 
     function addMessage(from, text, rag) {
         const newId = Math.random().toString(36).substring(2, 9);
